@@ -1,6 +1,8 @@
 package com.ticket.dao;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -9,12 +11,13 @@ import com.ticket.util.ConnectionUtil;
 
 public class DepartmentDAO {
 	JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
+	Logger logger = Logger.getLogger(EmployeeDAO.class.getName());
 
 	public void save(Department d) {
 		String sql = "INSERT  INTO DEPARTMENT(NAME) VALUES(?)";
 		Object[] params = {d.getName()};
 		int rows = jdbcTemplate.update(sql, params);
-		System.out.println("Number of rows inserted:" + rows);
+		logger.log(Level.INFO, "No. of rows insetred %d", rows);
 	}
 
 	public void update(Department d) {

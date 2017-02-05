@@ -17,25 +17,26 @@ Department d= new Department();
 Issue i = new Issue();
 Employee e=new Employee();
 TicketDetailService ts = new TicketDetailService();
-u.setId(2);t.setUsers(u);
-d.setName("HR");t.setDepartment(d);
-t.setId(2);
-t.setSubject("problem");
-t.setDesc("not");
-t.setPriority("medium");
+u.setId(1);t.setUsers(u);
+d.setName("finance");t.setDepartment(d);
+t.setId(3);
+t.setSubject("coding");
+t.setDesc("error");
+t.setPriority("low");
 t.setStatus("closed");
 //ts.closeTicketServer(t);
 //ts.createticketService(t);
 //ts.updateByUserService(t);
 /*for issue table*/
 i.setTransaction(t);
-e.setId(4);i.setEmployee(e);
-i.setSolution("restarting");
-ts.assingTicketService(t);
-
+e.setId(1);i.setEmployee(e);
+t.setEmployee(e);
+//i.setSolution("restarting");
+//ts.assingTicketService(t);
+//ts.reassingTicketService(t);
 //ts.replyTicketService(i);
-//ts.updateSolution(i);
+//ts.updateSolutionService(i);
+ts.listByEmpIdService(t);
 
 	}
-
 }

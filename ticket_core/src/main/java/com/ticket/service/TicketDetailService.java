@@ -1,5 +1,6 @@
 package com.ticket.service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,11 +18,11 @@ public class TicketDetailService {
 	
 	public void createticketService(Transaction t) throws ValidatorException{
 		try{
-			tv.ValidateCreateTicket(t.getUsers().getId(),t.getDepartment().getName() ,t.getSubject(),t.getDesc(),t.getPriority());
+			tv.validateCreateTicket(t.getUsers().getId(),t.getDepartment().getName() ,t.getSubject(),t.getDesc(),t.getPriority());
 		dao.createTicket(t.getUsers().getId(),t.getDepartment().getName() ,t.getSubject(),t.getDesc(),t.getPriority());
 		}
 		catch (Exception e){
-			LOGGER.log(Level.SEVERE,"exception occur",e);
+			LOGGER.log(Level.SEVERE,"exception",e);
 		}
 	}
 	/*     */
@@ -30,7 +31,7 @@ public class TicketDetailService {
 			tv.validateUpdateTicketByUser(t.getId(), t.getUsers().getId(), t.getSubject(), t.getDesc());
 			dao.updateTicketByUser(t.getId(), t.getUsers().getId(), t.getSubject(), t.getDesc());
 		}
-		catch(Exception e){LOGGER.log(Level.SEVERE,"exception occur",e);}
+		catch(Exception e){LOGGER.log(Level.SEVERE,"exception_occur",e);}
 		
 	}
 	/*   */
@@ -39,12 +40,12 @@ public class TicketDetailService {
 			tv.validateReplyTicket(i.getTransaction().getId(),i.getSolution());
 			dao.replyTicket(i.getTransaction().getId(),i.getSolution());
 		}
-		catch(Exception e){LOGGER.log(Level.SEVERE,"exception occur",e);}
+		catch(Exception e){LOGGER.log(Level.SEVERE,"exception",e);}
 	}
 	/*   */
-	public void updateSolution(Issue i){
+	public void updateSolutionService(Issue i){
 		try{
-			tv.updateSolution(i.getTransaction().getId(),i.getEmployee().getId(),i.getSolution());
+			tv.validateUpdateSolution(i.getTransaction().getId(),i.getEmployee().getId(),i.getSolution());
 			dao.updateSolutionByEmp(i.getTransaction().getId(),i.getEmployee().getId(),i.getSolution());
 		}
 		catch(Exception e){LOGGER.log(Level.SEVERE,"exception occur",e);}
@@ -52,7 +53,7 @@ public class TicketDetailService {
 	/*   */
 	public void closeTicketServer(Transaction t){
 		try{
-			tv.closeTicket(t.getStatus(),t.getId(),t.getUsers().getId());
+			tv.validateCloseTicket(t.getStatus(),t.getId(),t.getUsers().getId());
 			dao.closeTicket(t.getStatus(),t.getId(),t.getUsers().getId());
 		}
 		catch(Exception e){LOGGER.log(Level.SEVERE,"exception occur",e);}
@@ -60,11 +61,38 @@ public class TicketDetailService {
 	/*   */
 	public void assingTicketService(Transaction t) throws ValidatorException{
 		try{
-			tv.assignTicket(t.getId(),t.getEmployee().getId());
-		dao.assignTicket(t.getId(), t.getEmployee().getId());
+			tv.validateAssignTicket(t.getId(),t.getEmployee().getId());
+		    dao.assignTicket(t.getId(), t.getEmployee().getId());
 		}
-		catch(Exception e){LOGGER.log(Level.SEVERE,"exception occur",e);}
+		catch(Exception e){LOGGER.log(Level.SEVERE,"exception occurs",e);}
 		}
+	/*     */
+	public void reassingTicketService(Transaction t) throws ValidatorException{
+		try{
+			tv.validateAssignTicket(t.getId(),t.getEmployee().getId());
+		    dao.reassignTicket(t.getId(), t.getEmployee().getId());
+		}
+		catch(Exception e){LOGGER.log(Level.SEVERE,"exception occurs",e);}
+		}
+	/*      */
+	public void listByUserIdService(Transaction t){
+		try{
+			tv.validateListByUserId(t.getUsers().getId());
+			dao.listByUserId(t.getUsers().getId());
+		}
+		catch(Exception e){LOGGER.log(Level.SEVERE,"exception occurs",e);}
+	}
+	public List<Transaction> listByEmpIdService(Transaction t){
+		List<Transaction> message=null;
+		try{
+			tv.validateListByEmpId(t.getEmployee().getId());
+			message=dao.listByEmpId(t.getEmployee().getId());
+			return message;
+		}
+		catch(Exception e){LOGGER.log(Level.SEVERE,"exception occurs",e);}
+		return listByEmpIdService(t);
+	}
+	
 	}
 
 

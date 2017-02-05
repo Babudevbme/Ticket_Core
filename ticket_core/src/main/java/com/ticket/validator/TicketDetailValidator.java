@@ -5,11 +5,11 @@ import com.ticket.util.ValidatorUtil;
 
 public class TicketDetailValidator {
 	ValidatorUtil validatorUtil = new ValidatorUtil();
-public void ValidateCreateTicket(int userId, String deptName, String subject, String description,
+public void validateCreateTicket(int userId, String deptName, String subject, String description,
 		String priority) throws ValidatorException{
 	validatorUtil.rejectIfNegativeOrZeroOrNull(userId, "user_Id");
 	validatorUtil.rejectIfNullOrEmpty(deptName, "dept_Name");
-	validatorUtil.rejectIfNullOrEmpty(subject, "subject");
+	validatorUtil.rejectIfNullOrEmpty(subject, "Sub");
 	validatorUtil.rejectIfNullOrEmpty(description, "description");
 	validatorUtil.rejectIfNullOrEmpty(priority, "priority");
 }
@@ -24,18 +24,29 @@ public void validateReplyTicket(int ticketId,String solution) throws ValidatorEx
 	validatorUtil.rejectIfNegativeOrZeroOrNull(ticketId, "ticket_id");
 	validatorUtil.rejectIfNullOrEmpty(solution, "solution");
 }
-public void updateSolution(int ticketId,int empId, String subject) throws ValidatorException{
+public void validateUpdateSolution(int ticketId,int empId, String subject) throws ValidatorException{
 	validatorUtil.rejectIfNegativeOrZeroOrNull(ticketId, "ticketId");
 	validatorUtil.rejectIfNullOrEmpty(subject, "subject");
+	validatorUtil.rejectIfNegativeOrZeroOrNull(empId, "emp_id");
 }
-public void closeTicket(String status ,int id,int userId) throws ValidatorException{
+public void validateCloseTicket(String status ,int id,int userId) throws ValidatorException{
 	
 validatorUtil.rejectIfNullOrEmpty(status, "status");
 validatorUtil.rejectIfNegativeOrZeroOrNull(id, "id");
 validatorUtil.rejectIfNegativeOrZeroOrNull(userId, "userId");
 }
-public void assignTicket(int ticketId,int employeeId) throws ValidatorException{
+public void validateAssignTicket(int ticketId,int employeeId) throws ValidatorException{
 	validatorUtil.rejectIfNegativeOrZeroOrNull(ticketId, "ticketId");
 	validatorUtil.rejectIfNegativeOrZeroOrNull(employeeId, "employeeId");
+}
+public void validateReassingTicket(int ticketId,int empId) throws ValidatorException{
+	validatorUtil.rejectIfNegativeOrZeroOrNull(ticketId, "ticketId");
+	validatorUtil.rejectIfNegativeOrZeroOrNull(empId, "empId");
+}
+public void validateListByUserId(int userId) throws ValidatorException{
+	validatorUtil.rejectIfNegativeOrZeroOrNull(userId, "user_id");
+}
+public void validateListByEmpId(int empId) throws ValidatorException{
+	validatorUtil.rejectIfNegativeOrZeroOrNull(empId, "emp_id");
 }
 }

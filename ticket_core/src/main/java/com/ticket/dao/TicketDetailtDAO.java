@@ -3,6 +3,7 @@ package com.ticket.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -11,8 +12,10 @@ import com.ticket.model.Employee;
 import com.ticket.model.Transaction;
 import com.ticket.model.User;
 import com.ticket.util.ConnectionUtil;
+import com.ticket.validator.UserValidator;
 
 public class TicketDetailtDAO {
+	private static final Logger LOGGER = Logger.getLogger(UserValidator.class.getName());
 	JdbcTemplate jdbcTemplate=ConnectionUtil.getJdbcTemplate();
 	/* create ticket*/
 	public void createTicket(int userId, String deptName, String subject, String description,String priority) {
@@ -59,9 +62,8 @@ public class TicketDetailtDAO {
 		 jdbcTemplate.update(sql,params);
 	}
 	public void reassignTicket(int ticketId,int employeeId ){
-		String sql="UPDATE TRANSACTION SET EMP_ID=?,ASSINGTO=(SELECT NAME FROM EMPLOYEE WHERE ID=?),"
-				+ "STATUS=? WHERE ID=? AND STATUS=? AND DEPT_ID=(SELECT  DEPT_ID FROM EMPLOYEE WHERE ID=?) ";
-		Object[] params={employeeId,employeeId,ticketId};
+		String sql="UPDATE TRANSACTION SET EMP_ID=?,ASSINGTO=(SELECT NAME FROM EMPLOYEE WHERE ID=?) WHERE ID=? AND  DEPT_ID=(SELECT DEPT_ID FROM EMPLOYEE WHERE ID=?) ";
+		Object[] params={employeeId,employeeId,ticketId,employeeId};
 		jdbcTemplate.update(sql,params);
 	}
 
