@@ -1,11 +1,11 @@
-import com.ticket.dao.EmployeeRoleDAO;
-import com.ticket.model.EmployeeRole;
+import com.ticket.dao.RoleDAO;
+import com.ticket.model.Role;
 
 public class TestEmployeeRoleDAO {
 
 	public static void main(String[] args) {
-		EmployeeRoleDAO erd = new EmployeeRoleDAO();
-		EmployeeRole er = new EmployeeRole();
+		RoleDAO erd = new RoleDAO();
+		Role er = new Role();
 		er.setName("manager");
 		erd.save(er);
 

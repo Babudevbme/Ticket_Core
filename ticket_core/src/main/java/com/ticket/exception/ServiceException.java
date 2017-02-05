@@ -6,7 +6,7 @@ public class ServiceException extends Exception {
 		super(message, cause);
 	}
 
-	private ServiceException(String message) {
+	public ServiceException(String message) {
 		super(message);
 	}
 	

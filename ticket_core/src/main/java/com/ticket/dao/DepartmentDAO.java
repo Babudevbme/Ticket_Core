@@ -34,7 +34,7 @@ public class DepartmentDAO {
 	public List <Department> list()
 	{
 		String sql="SELECT *FROM DEPARTMENT ";
-		List < Department> list=jdbcTemplate.query(sql,( rs,params)->{
+	return jdbcTemplate.query(sql,( rs,params)->{
 			Department d= new Department();
 			d.setId(rs.getInt("id"));
 			d.setName(rs.getString("name"));
@@ -42,7 +42,30 @@ public class DepartmentDAO {
 			return d;
 			
 		});
-		return list;
+	}
+	public Department listById(int id) {
+
+		String sql = "select id,name from department where id=?";
+		Object[] params = { id };
+		return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
+			Department u = new Department();
+			u.setId(rs.getInt("id"));
+			u.setName(rs.getString("NAME"));
+			return u;
+		});
+
+	}
+
+	public Department listByName(String name) {
+
+		String sql = "select id from department where name=?";
+		Object[] params = { name };
+		return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
+			Department u = new Department();
+u.setId(rs.getInt("id"));
+return u;
+		});
+
 	}
 	
 

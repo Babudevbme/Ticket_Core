@@ -4,20 +4,20 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.ticket.model.EmployeeRole;
+import com.ticket.model.Role;
 import com.ticket.util.ConnectionUtil;
 
-public class EmployeeRoleDAO {
+public class RoleDAO {
 	JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 
-	public void save(EmployeeRole u) {
+	public void save(Role u) {
 		String sql = "insert into EMP_ROLE(name) values(?)";
 		Object[] params = {u.getName() };
 		jdbcTemplate.update(sql, params);
 
 	}
 
-	public void update(EmployeeRole u) {
+	public void update(Role u) {
 		String sql = "update EMP_ROLE set name=?  where id=?";
 		Object[] params = { u.getId(), u.getName() };
 		jdbcTemplate.update(sql, params);
@@ -25,9 +25,6 @@ public class EmployeeRoleDAO {
 	}
 
 	
-
-	
-
 	public void delete(int id) {
 		String sql = "delete from EMP_ROLE where id=?  ";
 		Object[] params = { id };
@@ -35,11 +32,11 @@ public class EmployeeRoleDAO {
 
 	}
 
-	public List<EmployeeRole> list() {
+	public List<Role> list() {
 		String sql = "select * from EMP_ROLE ";
 		return jdbcTemplate.query(sql, (rs, rowNum) -> {
-			EmployeeRole u = new EmployeeRole();
-			u.setId(rs.getLong("ID"));
+			Role u = new Role();
+			u.setId(rs.getInt("ID"));
 			u.setName(rs.getString("NAME"));
 			u.setActive(rs.getBoolean("ACTIVE"));
 			return u;
@@ -48,14 +45,13 @@ public class EmployeeRoleDAO {
 	}
 
 	
-
-	public EmployeeRole listById(int id) {
+	public Role listById(int id) {
 
 		String sql = "select id,name from e_role where id=?";
 		Object[] params = { id };
 		return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
-			EmployeeRole u = new EmployeeRole();
-			u.setId(rs.getLong("ID"));
+			Role u = new Role();
+			u.setId(rs.getInt("ID"));
 			u.setName(rs.getString("NAME"));
 			return u;
 		});

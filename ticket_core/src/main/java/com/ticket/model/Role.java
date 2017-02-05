@@ -3,8 +3,8 @@ package com.ticket.model;
 import lombok.Data;
 
 @Data
-public class EmployeeRole {
-	private long id;
+public class Role {
+	private int id;
 	private String name;
 	private boolean active;
 

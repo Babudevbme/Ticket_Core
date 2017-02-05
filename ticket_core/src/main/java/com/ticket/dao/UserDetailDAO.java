@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.ticket.model.Users;
+import com.ticket.model.User;
 import com.ticket.util.ConnectionUtil;
 
-public class UsersDAO {
+public class UserDetailDAO {
 	JdbcTemplate jdbcTemplate=ConnectionUtil.getJdbcTemplate();
-	public void save(Users users)
+	public void save(User users)
 	{
 		String sql="INSERT INTO USERS(NAME,EMAIL_ID,PASSWORD) VALUES(?,?,?)";
 		Object[]params={users.getName(),users.getEmailId(),users.getPassword()};
@@ -19,7 +19,7 @@ public class UsersDAO {
 	
 	
 	
-	public void update(Users users)
+	public void update(User users)
 	{
 		String sql="UPDATE USERS SET NAME=?,EMAIL_ID=?,PASSWORD=? WHERE ID=?";
 		Object[]params={users.getName(),users.getEmailId(),users.getPassword(),users.getId()};
@@ -34,13 +34,28 @@ public class UsersDAO {
 		int rows=jdbcTemplate.update(sql,params);
 		System.out.println("Number of rows deleted:" +rows);
 	}
- 	
 	
-	public List <Users> list()
+	/*for user register*/
+	public void register(String name ,String email,String password ){
+		String sql="insert users(name,email_id,password) values(?,?,?)";
+		Object[] params={name,email,password};
+		jdbcTemplate.update(sql, params);
+		}
+	/*for user login*/
+ 	
+	public String login(String email,String password){
+		 String sql="select name from users where email_id=? and password=? ";
+		 Object[] params={email,password};
+		return jdbcTemplate.queryForObject(sql, params, String.class);
+
+		 
+	 }
+	
+	public List <User> list()
 	{
 		String sql="SELECT *FROM USERS";
-		List <Users > list=jdbcTemplate.query(sql,( rs,params)->{
-			Users u = new Users();
+		return jdbcTemplate.query(sql,( rs,params)->{
+			User u = new User();
 			u.setId(rs.getInt("id"));
 			u.setName(rs.getString("name"));
 			u.setEmailId(rs.getString("email_id"));
@@ -48,7 +63,7 @@ public class UsersDAO {
 			return u;
 
 });
-		return list;
+		
 	}
 
 

@@ -9,24 +9,23 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.ticket.model.Department;
 import com.ticket.model.Employee;
 import com.ticket.model.Transaction;
-import com.ticket.model.Users;
+import com.ticket.model.User;
 import com.ticket.util.ConnectionUtil;
 
-public class TransactionDAO {
+public class TicketDAO {
 	JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 
 	public void save(Transaction t) {
-		String sql = "INSERT INTO TRANSACTION(USER_ID,EMP_ID,DEPT_ID,SUBJECT,DESCRIPTION,CREATED_DATE,STATUS) VALUES(?,?,?,?,?,?,?)";
-		Object[] params = {t.getUsers().getId(),t.getEmployee().getId(),t.getDepartment().getId()
-				,t.getSubject(),t.getDesc(),t.getDate(),t.getStatus()};
+		String sql = "INSERT INTO TRANSACTION(USER_ID,DEPT_ID,SUBJECT,DESCRIPTION,PRIORITY) VALUES(?,?,?,?,?)";
+		Object[] params = {t.getUsers().getId(),t.getDepartment().getId()
+				,t.getSubject(),t.getDesc(),t.getPriority()};
 		int rows = jdbcTemplate.update(sql, params);
 		System.out.println("Number of rows inserted:" + rows);
 	}
 
 	public void update(Transaction t) {
-		String sql = "UPDATE TRANSACTION  SETUSER_ID=?,EMP_ID=?,DEPT_ID=?,SUBJECT=?,DESCRIPTION=?,CREATED_DATE=?,STATUS=? WHERE ID=?";
-		Object[] params = {t.getUsers().getId(),t.getEmployee().getId(),t.getDepartment().getId()
-				,t.getSubject(),t.getDesc(),t.getDate(),t.getStatus(),t.getId()};
+		String sql = "UPDATE TRANSACTION  SET SUBJECT=?,DESCRIPTION=? WHERE ID=?";
+		Object[] params = {t.getSubject(),t.getDesc(),t.getId()};
 		int rows = jdbcTemplate.update(sql, params);
 		System.out.println("Number of rows updated" + rows);
 
@@ -40,25 +39,29 @@ public class TransactionDAO {
 	}
 	public List <Transaction> list()
 	{
-		String sql="SELECT *FROM ";
+		String sql="SELECT *FROM TRANSACTION  ";
 		return jdbcTemplate.query(sql,( rs,params)-> convert(rs));
 	}
 
 	private Transaction convert(ResultSet rs) throws SQLException {
 		Transaction t= new Transaction();
-		Users u = new Users();
+		User u = new User();
 		Employee e = new Employee();
 		Department d = new Department();
+		t.setId(rs.getInt("id"));
 		u.setId(rs.getInt("user_id"));
 		e.setId(rs.getInt("emp_id"));
 		d.setId(rs.getInt("dept_id"));
 		t.setUsers(u);
 		t.setEmployee(e);
 		t.setDepartment(d);
-		t.setSubject("subject");
-		t.setDesc("description");
-		t.setDate(rs.getDate("created_date").toLocalDate());
+		t.setAssingTo(rs.getString("assingto"));
+		t.setSubject(rs.getString("SUBJECT"));
+		t.setTimeStamp(rs.getTimestamp("created_date").toLocalDateTime());
+		t.setDesc(rs.getString("DESCRIPTION"));
 		t.setStatus(rs.getString("status"));
+		t.setPriority(rs.getString("priority"));
+
 		return t;
 	}
 	

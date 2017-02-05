@@ -1,19 +1,22 @@
 package com.ticket.testservice;
 
 import com.ticket.exception.ServiceException;
+import com.ticket.exception.ValidatorException;
 import com.ticket.model.User;
 import com.ticket.service.UserSevice;
 
-public class TestService {
+public class TestUserService {
 
-	public static void main(String[] args) throws ServiceException {
+	public static void main(String[] args) throws ValidatorException {
 			User u = new User();
-			u.setName("ghgh");
-			u.setEmailId("babu");;
-			u.setPassword("sfv");
+		u.setName("solai");
+			u.setEmailId("babudev@gmail");
+			u.setPassword("babudev");
 
 UserSevice us = new UserSevice();
-us.saveService(u);
+System.out.println(us.loginService(u));
+
+
 		}
 	}
 
