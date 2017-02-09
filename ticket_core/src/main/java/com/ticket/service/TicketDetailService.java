@@ -16,7 +16,7 @@ public class TicketDetailService {
 	TicketDetailtDAO dao=new TicketDetailtDAO();
 	TicketDetailValidator tv=new TicketDetailValidator();
 	
-	public void createticketService(Transaction t) throws ValidatorException{
+	public boolean createticketService(Transaction t) throws ValidatorException{
 		try{
 			tv.validateCreateTicket(t.getUsers().getId(),t.getDepartment().getName() ,t.getSubject(),t.getDesc(),t.getPriority());
 		dao.createTicket(t.getUsers().getId(),t.getDepartment().getName() ,t.getSubject(),t.getDesc(),t.getPriority());
@@ -24,6 +24,7 @@ public class TicketDetailService {
 		catch (Exception e){
 			LOGGER.log(Level.SEVERE,"exception",e);
 		}
+		return true;
 	}
 	/*     */
 	public void updateByUserService(Transaction t){

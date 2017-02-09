@@ -36,10 +36,10 @@ public class UserDetailDAO {
 	}
 	
 	/*for user register*/
-	public void register(String name ,String email,String password ){
+	public int register(String name ,String email,String password ){
 		String sql="insert users(name,email_id,password) values(?,?,?)";
 		Object[] params={name,email,password};
-		jdbcTemplate.update(sql, params);
+		return jdbcTemplate.update(sql, params);
 		}
 	/*for user login*/
  	

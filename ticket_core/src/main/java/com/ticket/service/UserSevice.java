@@ -15,7 +15,7 @@ public class UserSevice {
 	UserValidator uv = new UserValidator();
 
 
-	public void registerService(User u) throws ServiceException {
+	public boolean registerService(User u) throws ServiceException {
 		try {
 			uv.validateUserRegister(u.getName(), u.getEmailId(), u.getPassword());
             ud.register(u.getName(), u.getEmailId(),u.getPassword());
@@ -23,6 +23,7 @@ public class UserSevice {
 
 			LOGGER.log(Level.SEVERE,"exception occur",e);
 		}
+		return "true" != null;
 	}
 	public String loginService(User u) throws ValidatorException
 	{         
@@ -37,4 +38,7 @@ public class UserSevice {
 	
 
 }
-}
+		
+	}
+		
+
