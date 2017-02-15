@@ -3,7 +3,7 @@ package com.ticket.model;
 import lombok.Data;
 
 @Data
-public class Issue {
+public class Solution {
 	private int id;
 	private Employee employee;
 	private  Transaction transaction;
